@@ -7,7 +7,7 @@
     }
 
     Monster.prototype.revive = function () {
-        var x = (Math.random() * Bouncy.screen.width * 2) + Bouncy.screen.width;
+        var x = (Math.random() * Bouncy.screen.width) - Bouncy.screen.offsetX + Bouncy.screen.width;
         var y = (Math.random() * Bouncy.screen.height) + 1;
         this.rect = new Bouncy.Rectangle(x, y, 8, 8);
         this.speed = (Math.random() * 1) + 0.1;
