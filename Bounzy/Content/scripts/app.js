@@ -71,22 +71,12 @@ Bouncy.gameLoop = function () {
                 Bouncy.monsters[i].collision();
                 Bouncy.player.hit();
             }
-            
-            //Bouncy.monsters.splice(i, 1);
-        } else {
-            
         }
         
         Bouncy.monsters[i].draw();
-
-        
     }
 
-    
-
     Bouncy.player.move();
-
-    
 
     Bouncy.screen.offsetX--;
 
