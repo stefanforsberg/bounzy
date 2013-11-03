@@ -1,0 +1,22 @@
+﻿
+body {
+    margin:50px 0px; padding:0px;
+    text-align:center;
+}
+#game-area {
+    margin:0px auto;
+    width: 800px;
+}
+
+#canvas1 {
+    background-image: url(../images/Untitled.jpg);
+}
+
+#info {
+    text-align: left;
+    width: 800px;
+}
+
+.info-box {
+    margin-right: 35px;
+}

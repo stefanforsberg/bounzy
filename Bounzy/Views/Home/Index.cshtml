@@ -1,0 +1,31 @@
+﻿@using System.Web.Optimization
+@model dynamic
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Bounzy</title>
+  
+  <link href="~/Content/styles/style.css" rel="stylesheet" />
+
+</head>
+
+    <body>
+        <div id="game-area">
+            <canvas id="canvas1" width="800" height="400" style = "border: 1px solid black;">
+            </canvas>
+            
+            <div id="info">
+                <span class="info-box">Boosts: <span id="boosts">5</span></span>
+            
+                <span class="info-box">Times hit: <span id="player-hits">0</span></span>
+            
+                <span class="info-box">Monsters: <span id="monsters">0</span></span>
+            </div>
+
+        </div>
+        
+        @Scripts.Render("~/bundles/bouncy")
+    </body>
+</html>
