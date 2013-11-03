@@ -10,7 +10,6 @@
         var x = (Math.random() * Bouncy.screen.width) - Bouncy.screen.offsetX + Bouncy.screen.width;
         var y = (Math.random() * Bouncy.screen.height) + 1;
         this.rect = new Bouncy.Rectangle(x, y, 8, 8);
-        this.speed = (Math.random() * 1) + 0.1;
         this.collisionRect = new Bouncy.Rectangle(x, y, 8, 8);
         this.isExploding = false;
         this.shouldDraw = false;
@@ -50,15 +49,15 @@
     };
 
     Monster.prototype.setSpeed = function () {
-        this.rect.left -= this.speed;
+        this.rect.left -= this.movementCoefficient;
     };
     
     Monster.prototype.upAndDown = function () {
-        this.rect.top += 2 * Math.sin(Bouncy.screen.offsetX / 20);
+        this.rect.top += 2 * Math.sin(Bouncy.screen.offsetX / 20 - 20 * this.movementCoefficient);
     };
     
     Monster.prototype.changingSize = function () {
-        this.rect.width = this.rect.height = 8 +8*Math.abs(Math.sin(Bouncy.screen.offsetX / 20));
+        this.rect.width = this.rect.height = 8 + this.movementCoefficient * Math.abs(Math.sin(Bouncy.screen.offsetX / 20 + 4 * this.movementCoefficient));
     };
 
     Monster.prototype.collision = function () {
@@ -92,16 +91,19 @@
         
         speedMonster: function(monster) {
             monster.updateRect = monster.setSpeed;
+            monster.movementCoefficient = (Math.random() * 1) + 0.1;
             monster.color = new Bouncy.Rgba(0, 153, 153, 0.9);
         },
         
         upAndDownMonster: function(monster) {
             monster.updateRect = monster.upAndDown;
+            monster.movementCoefficient = Math.random();
             monster.color = new Bouncy.Rgba(255, 133, 0, 0.9);
         },
         
         changingSizeMonster: function(monster) {
             monster.updateRect = monster.changingSize;
+            monster.movementCoefficient = Math.floor((Math.random() * 5) + 5);
             monster.color = new Bouncy.Rgba(217, 52, 133, 0.9);
         }
     };

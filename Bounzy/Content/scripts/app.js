@@ -29,6 +29,7 @@ Bouncy.init = function () {
     this.ctx = can.getContext('2d');
     this.monsters = [];
 
+
     var monsterSpawnerInteral = setInterval(function () {
         Bouncy.monsters.push(Bouncy.MonsterFactory.createMonster());
         Bouncy.channel.publish("monster.added", { count: Bouncy.monsters.length });
