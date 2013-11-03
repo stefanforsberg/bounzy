@@ -29,15 +29,15 @@ Bouncy.init = function () {
     this.ctx = can.getContext('2d');
     this.monsters = [];
 
-    //for (var i = 0; i < 35; i++) {
-        
-    //    Bouncy.channel.publish("monster.added", { count: this.monsters.length });
-    //}
-    
-    setInterval(function () {
+    var monsterSpawnerInteral = setInterval(function () {
         Bouncy.monsters.push(Bouncy.MonsterFactory.createMonster());
         Bouncy.channel.publish("monster.added", { count: Bouncy.monsters.length });
-    }, 3000);
+        
+        if (Bouncy.monsters.length >= 50) {
+            window.clearInterval(monsterSpawnerInteral);
+        }
+
+    }, 10);
 
     Bouncy.player = new Bouncy.player();
 
