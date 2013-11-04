@@ -19,18 +19,7 @@
     Monster.prototype.draw = function () {
 
         if (this.isExploding) {
-            
-            if (this.color.alpha > 0) {
-                this.color.setAlpha(this.color.alpha -= .02);
-            }
-            
-            if (this.color.alpha === 0) {
-                this.revive();
-            }
-
-            Bouncy.ctx.fillStyle = this.color.rgbaString;
-            Bouncy.ctx.fillRect(this.rect.left, this.rect.top += this.explodingDirection, this.rect.width / 2, this.rect.height / 2);
-            Bouncy.ctx.fillRect(this.rect.left + 8, this.rect.top += this.explodingDirection, this.rect.width / 2, this.rect.height / 2);
+            this.explosion.draw();
         } else {
             Bouncy.ctx.fillStyle = this.color.rgbaString;
             Bouncy.ctx.fillRect(this.rect.left, this.rect.top, this.rect.width, this.rect.height);
@@ -62,13 +51,58 @@
 
     Monster.prototype.collision = function () {
         
-        if (Bouncy.player.rect.top > this.collisionRect.top) {
-            this.explodingDirection = -1;
-        }
-
+        this.explosion = new explosion(this.rect, this.color);
         this.isExploding = true;
     };
 
+    var explosion = function(rect, color) {
+        this.rect = rect;
+        this.color = color;
+        this.explodingDirection = 1;
+        this.relativeX = 0;
+        this.relativeY = 0;
+        this.spin = Math.floor((Math.random() * 360) + 1);
+        this.spinDirection = Math.floor((Math.random() * 10) - 5);
+        this.size = this.rect.width / 2;
+        this.debris = [
+            { x: Math.floor((Math.random() * 10) + 1), y: -Math.floor((Math.random() * 8) + 1), dir: 1, centerLeft: rect.left, centerTop: rect.top },
+            { x: Math.floor((Math.random() * 10) + 1), y: -Math.floor((Math.random() * 8) + 1), dir: .3, centerLeft: rect.left, centerTop: rect.top },
+            { x: Math.floor((Math.random() * 10) + 1), y: -Math.floor((Math.random() * 8) + 1), dir: 0, centerLeft: rect.left, centerTop: rect.top },
+            { x: Math.floor((Math.random() * 10) + 1), y: -Math.floor((Math.random() * 8) + 1), dir: -1, centerLeft: rect.left, centerTop: rect.top },
+            { x: Math.floor((Math.random() * 10) + 1), y: -Math.floor((Math.random() * 8) + 1), dir: -.2, centerLeft: rect.left, centerTop: rect.top }
+        ];
+    };
+
+    explosion.prototype.draw = function() {
+        if (this.color.alpha > 0) {
+            this.color.setAlpha(this.color.alpha -= .01);
+        }
+
+        Bouncy.ctx.fillStyle = this.color.rgbaString;
+
+        this.drawDebris(0);
+        this.drawDebris(1);
+        this.drawDebris(2);
+        this.drawDebris(3);
+        this.drawDebris(4);
+        
+        this.spin += this.spinDirection;
+    };
+    
+    explosion.prototype.drawDebris = function(i) {
+        Bouncy.ctx.save();
+
+        Bouncy.ctx.translate(this.debris[i].centerLeft + (this.size / 2), this.debris[i].centerTop + (this.size / 2));
+        Bouncy.ctx.rotate(this.spin * Math.PI / 180);
+
+        this.debris[i].x += this.debris[i].dir;
+        this.debris[i].y += this.debris[i].dir;
+        Bouncy.ctx.fillRect(this.debris[i].x - (this.size / 2), this.debris[i].y - (this.size / 2), this.size, this.size);
+        this.debris[i].centerTop += this.debris[i].dir;
+        this.debris[i].centerTop += this.debris[i].dir;
+        
+        Bouncy.ctx.restore();
+    };
 
     var monsterFactory = {
         createMonster: function () {
