@@ -11,6 +11,7 @@ namespace Bounzy.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/bouncy").Include(
+                        "~/content/scripts/lib/AnimationFrame.min.js",
                         "~/content/scripts/lib/underscore.min.js",
                         "~/content/scripts/lib/postal.min.js",
                         "~/content/scripts/rectangle.js",

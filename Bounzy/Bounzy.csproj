@@ -135,6 +135,7 @@
     <Content Include="Content\images\bg.png" />
     <Content Include="Content\images\Untitled.jpg" />
     <Content Include="Content\scripts\app.js" />
+    <Content Include="Content\scripts\lib\AnimationFrame.min.js" />
     <Content Include="Content\scripts\rgba.js" />
     <Content Include="Content\scripts\player.js" />
     <Content Include="Content\scripts\monster.js" />

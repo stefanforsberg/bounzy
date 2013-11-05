@@ -5,6 +5,8 @@ Bouncy.channel = postal.channel();
 Bouncy.init = function () {
     var can = document.getElementById('canvas1');
 
+    this.animationFrame = new AnimationFrame()
+
     Bouncy.channel.subscribe("player.boost.change", function (data) {
         document.getElementById('boosts').innerHTML = data.newBoost;
     });
@@ -84,10 +86,12 @@ Bouncy.gameLoop = function () {
 
     document.getElementById('canvas1').style.backgroundPosition = (Bouncy.screen.offsetX/5) + "px 0";
 
-    window.webkitRequestAnimationFrame(Bouncy.gameLoop);
+    Bouncy.animationFrame.request(Bouncy.gameLoop);
 };
 
 
 (function () {
+    AnimationFrame.shim();
+    
     Bouncy.init();
 }());
